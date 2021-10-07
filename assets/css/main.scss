@@ -81,7 +81,7 @@
         }
         &_present {
           display: flex;
-          justify-content: space-between;
+          grid-gap: 140px;
           align-items: flex-end;
         }
       }
@@ -90,11 +90,106 @@
 }
 .block {
   &__present {
-    .present {
-      &__img {
-        width: 170px;
-        height: 56px;
-        background-image: url("/src/img/image_1.png");
+    .present__first {
+      .present {
+        &__img {
+          width: 568px;
+          height: 365px;
+        }
+      }
+      .desc {
+        &__text {
+          font-family: Cormorant, sans-serif;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 32px;
+          line-height: 40px;
+
+          color: #070D17;
+          box-shadow: 0 -1px 0 #e6e9ec;
+          padding: 20px 0;
+        }
+        &__block {
+          display: flex;
+          grid-gap: 10px;
+        }
+        &__link {
+          font-family: Montserrat, sans-serif;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          line-height: 28px;
+
+          color: #070D17;
+        }
+      }
+    }
+    .present__second {
+      .present {
+        &__img {
+          width: 970px;
+          height: 622px;
+        }
+      }
+    }
+  }
+  &__info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    .info {
+      &__img-line {
+        width: 200px;
+      }
+      &__line {
+        width: 100%;
+        border: 0;
+        height: 1px;
+        background: #ADB2BA;
+        margin-top: 40px;
+      }
+      &__text {
+        font-style: normal;
+        color: #070D17;
+      }
+      &__title {
+        margin: 0;
+        font-family: Cormorant, sans-serif;
+        font-weight: 600;
+        font-size: 56px;
+        line-height: 60px;
+      }
+      &__desc {
+        margin: 0;
+        font-family: Montserrat, sans-serif;
+        font-weight: normal;
+        font-size: 22px;
+        line-height: 28px;
+      }
+    }
+  }
+  &__send {
+    display: flex;
+    grid-gap: 40px;
+    .send {
+      &__title {
+        font-family: Cormorant, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 40px;
+        line-height: 48px;
+
+        color: #070D17;
+      }
+      &__data {
+        display: flex;
+        flex-direction: column;
+        grid-gap: 25px;
+      }
+      &__dropdown {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
       }
     }
   }
