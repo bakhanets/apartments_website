@@ -53,32 +53,40 @@
           <div class="send__title">Заполните анкету и мы подберем квартиры по Вашим требованиям</div>
           <div class="send__dropdown">
             <baseDD
+              v-model="purchasePurposeIndex"
               :items="purchasePurpose"
               :label="'Цель покупки'"
               :placeholder="'Выберите вариант'"
             />
             <baseDD
+              v-model="constructionPhaseIndex"
               :items="constructionPhase"
               :label="'Этап строительства'"
               :placeholder="'Выберите вариант'"
             />
             <baseDD
+              v-model="apartmentAreaIndex"
               :items="apartmentArea"
               :label="'Площадь квартиры'"
               :placeholder="'Выберите вариант'"
             />
             <baseDD
+              v-model="roomsNumberIndex"
               :items="roomsNumber"
               :label="'Количество комнат'"
               :placeholder="'Выберите вариант'"
             />
             <baseDD
+              v-model="paymentTypeIndex"
               :items="paymentType"
               :label="'Вид оплаты'"
               :placeholder="'Выберите вариант'"
             />
           </div>
-          <button class="send__btn">Отправить</button>
+          <button
+            class="send__btn"
+            @click="showModal()"
+          >Отправить</button>
         </div>
       </div>
     </div>
@@ -90,6 +98,15 @@ export default {
   name: "index",
   components: {
     baseDD,
+  },
+  data() {
+    return {
+      purchasePurposeIndex: -1,
+      constructionPhaseIndex: -1,
+      apartmentAreaIndex: -1,
+      roomsNumberIndex: -1,
+      paymentTypeIndex: -1,
+    }
   },
   computed: {
     purchasePurpose() {
@@ -107,6 +124,11 @@ export default {
     apartmentArea() {
       return ["До 20 м2", "от 20 до 29 м2", "от 30 до 39 м2", "от 40 до 59 м2", "от 60 до 79 м2", "Более 80 м2"];
     },
-  }
+  },
+  methods: {
+    showModal() {
+      this.$store.dispatch('modals/show');
+    }
+  },
 }
 </script>

@@ -19,31 +19,15 @@
           :disabled="disabled"
           @click="isShown = !isShown"
       >
-        <div
-            v-if="isIcon"
-            class="dd__icon"
-        >
-          <img
-              :src="items[value].icon"
-              :alt="items[value].title"
-          >
-          <span
-              class="dd__title"
-              :class="[{'dd__title_white': type === 'blue' }, { 'dd__title_black': mode === 'blackFont' }]"
-          >
-            {{ items[value].title }}
-          </span>
-        </div>
-
         <span
-            v-else-if="items[value]"
+            v-if=" value !== -1"
             class="dd__title"
             :class="[{'dd__title_white': type === 'blue' }, { 'dd__title_black': mode === 'blackFont' }]"
         >
           {{ items[value] }}
         </span>
         <span
-            v-else-if="!items[value] && placeholder"
+            v-else
             class="dd__title"
             :class="[{'dd__title_white': type === 'blue' }, { 'dd__title_black': mode === 'blackFont' }]"
         >
@@ -200,8 +184,14 @@ export default {
   min-width: 131px;
   position: relative;
   text-align: left;
+  border: solid 1px #e6e9ec;
   &__title {
-    color: #070D17;
+    font-family: Montserrat, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+    color: #6E7278;
     &_white {
       color: #E5E5E5;
     }
@@ -217,7 +207,6 @@ export default {
     border: 1px solid #F7F8FA;
     box-sizing: border-box;
     box-shadow: 0 17px 17px rgba(0, 0, 0, 0.05), 0 5.125px 5.125px rgba(0, 0, 0, 0.0325794), 0 2.12866px 2.12866px rgba(0, 0, 0, 0.025), 0 0.769896px 0.769896px rgba(0, 0, 0, 0.0174206);
-    border-radius: 6px;
     width: 100%;
     flex-basis: 100%;
     position: absolute;
@@ -227,7 +216,6 @@ export default {
     align-items: center;
     justify-content: flex-start;
     grid-gap: 15px;
-    padding: 15px 20px;
     z-index: 1;
     &_small {
       height: 200px;
@@ -236,12 +224,23 @@ export default {
     }
   }
   &__item {
+    font-family: Montserrat, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    padding: 10px;
+    background: transparent;
     text-align: left;
     flex-basis: 100%;
     width: 100%;
     height: 100%;
     color: #070D17;
     &:hover {
+      background:#F3F3F3;
       color: #070D17;
     }
     &_icon {
@@ -280,6 +279,9 @@ export default {
   //  }
   //}
   &__btn {
+    cursor: pointer;
+    border: none;
+    outline: none;
     height: 46px;
     display: flex;
     align-items: center;
