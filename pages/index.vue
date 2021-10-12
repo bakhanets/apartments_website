@@ -9,10 +9,10 @@
           <img class="present__img" :src="require('~/src/img/image_1.png')"/>
           <div class="present__desc desc">
             <p class="desc__text">Подберем квартиру по Вашему запросу в новых жилых комплексах Москвы</p>
-            <div class="desc__block">
+            <a class="desc__block" href="#ddBlock">
               <p class="desc__link">Подоборать</p>
               <img class="desc__img" :src="require('~/src/img/arrow.svg')"/>
-            </div>
+            </a>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div class="content__block content__block_send block">
+    <div class="content__block content__block_send block" name="ddBlock">
       <div class="block__send send">
         <div class="send__img">
           <img :src="require('~/src/img/IMG_3704.JPG')">

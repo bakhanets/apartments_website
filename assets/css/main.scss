@@ -391,6 +391,50 @@
     width: 80%;
   }
 }
+@media only screen and (max-width: 768px) {
+  .main__content .content__block_title {
+    font-size: 65px;
+  }
+  .main__content .content__block_present {
+    grid-gap: 40px;
+  }
+  .block {
+    &__info {
+      flex-direction: column;
+    }
+    &__send {
+      grid-gap: 30px;
+      flex-direction: column;
+    }
+  }
+  .block__send {
+    .send__img {
+      width: 60%;
+    }
+    .send__dropdown {
+      grid-template-columns: 1fr;
+    }
+  }
+  .block__info {
+    .info__desc {
+      font-size: 16px;
+    }
+  }
+  .block__present_first {
+    width: 100%;
+  }
+  .info__text {
+    &_left {
+      padding-left: 0;
+    }
+    &_middle {
+      padding-left: 30%;
+    }
+    &_right {
+      padding-left: 60%;
+    }
+  }
+}
 /* cyrillic-ext */
 @font-face {
   font-family: 'Cormorant';
