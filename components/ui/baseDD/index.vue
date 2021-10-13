@@ -9,7 +9,7 @@
     <div
         v-click-outside="hideDd"
         class="dd"
-        :class="[{'dd__top': mode === 'top' }]"
+        :class="value !== -1 ? 'dd_active' : ''"
     >
       <slot name="card" />
 
@@ -21,7 +21,7 @@
       >
         <span
             v-if=" value !== -1"
-            class="dd__title"
+            class="dd__title_black"
             :class="[{'dd__title_white': type === 'blue' }, { 'dd__title_black': mode === 'blackFont' }]"
         >
           {{ items[value] }}
@@ -169,6 +169,7 @@ export default {
   font-style: normal;
   font-weight: 300;
   font-size: 18px;
+  margin-bottom: 4px;
   line-height: 28px;
   color: #070D17;
 }
@@ -196,8 +197,16 @@ export default {
       color: #E5E5E5;
     }
     &_black {
+      font-family: Montserrat, sans-serif;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 24px;
       color: #070D17 !important;
     }
+  }
+  &_active {
+    border: solid 1px #070D17;
   }
   &__top {
     align-items: flex-start;

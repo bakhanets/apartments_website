@@ -23,28 +23,28 @@
       </div>
     </div>
     <div class="content__block content__block_info block">
+      <div class="block__info block__info_img info">
+        <img class="info__img" :src="require('~/src/img/image_2.png')"/>
+      </div>
       <div class="block__info info">
         <div class="info__img-line">
           <div class="info__line"/>
         </div>
         <div class="info__text">
           <p class="info__title">более 400</p>
-          <br/>
           <p class="info__desc">жилых комплексов в базе</p>
         </div>
         <div class="info__text">
           <p class="info__title">40 тысяч</p>
-          <br/>
           <p class="info__desc">объектов в базе данных</p>
         </div>
         <div class="info__text">
           <p class="info__title">7 лет</p>
-          <br/>
           <p class="info__desc">опыта продаж недвижимости</p>
         </div>
       </div>
     </div>
-    <div class="content__block content__block_send block" name="ddBlock">
+    <div class="content__block content__block_send block" id="ddBlock">
       <div class="block__send send">
         <div class="send__img">
           <img :src="require('~/src/img/IMG_3704.JPG')">
@@ -53,27 +53,27 @@
           <div class="send__title">Заполните анкету и мы подберем квартиры по Вашим требованиям</div>
           <div class="send__dropdown">
             <baseDD
+                v-model="apartmentAreaIndex"
+                :items="apartmentArea"
+                :label="'Площадь квартиры'"
+                :placeholder="'Выберите вариант'"
+            />
+            <baseDD
+                v-model="roomsNumberIndex"
+                :items="roomsNumber"
+                :label="'Количество комнат'"
+                :placeholder="'Выберите вариант'"
+            />
+            <baseDD
+                v-model="constructionPhaseIndex"
+                :items="constructionPhase"
+                :label="'Этап строительства'"
+                :placeholder="'Выберите вариант'"
+            />
+            <baseDD
               v-model="purchasePurposeIndex"
               :items="purchasePurpose"
               :label="'Цель покупки'"
-              :placeholder="'Выберите вариант'"
-            />
-            <baseDD
-              v-model="constructionPhaseIndex"
-              :items="constructionPhase"
-              :label="'Этап строительства'"
-              :placeholder="'Выберите вариант'"
-            />
-            <baseDD
-              v-model="apartmentAreaIndex"
-              :items="apartmentArea"
-              :label="'Площадь квартиры'"
-              :placeholder="'Выберите вариант'"
-            />
-            <baseDD
-              v-model="roomsNumberIndex"
-              :items="roomsNumber"
-              :label="'Количество комнат'"
               :placeholder="'Выберите вариант'"
             />
             <baseDD
