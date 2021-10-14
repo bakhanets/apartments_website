@@ -46,12 +46,16 @@
             </div>
             <div class="content__inputs">
               <baseInput
+                  v-model="userName"
                   :label="'Ваше имя'"
                   :placeholder="'Введите ваше имя'"
+                  :errorText="userName_error"
               ></baseInput>
               <baseInput
+                  v-model="userPhone"
                   :label="'Номер телефона'"
                   :placeholder="'Введите номер телефона'"
+                  :errorText="userPhone_error"
                   id="phone"
               ></baseInput>
             </div>
@@ -80,7 +84,7 @@
                 </div>
                 <baseButton
                     class="ctm-modal__btn"
-                    @click="modalVersion = 0"
+                    @click="hide('all')"
                 >
                   {{ 'Закрыть' }}
                 </baseButton>
@@ -96,6 +100,7 @@
 import { mapGetters } from 'vuex';
 import baseInput from '~/components/ui/baseInput';
 import baseButton from '~/components/ui/baseButton';
+
 export default {
   name: "default",
   components: {
@@ -106,11 +111,16 @@ export default {
     return {
       modalStatus: null,
       modalVersion: 0,
+      userName: '',
+      userPhone: '',
+      userName_error: '',
+      userPhone_error: '',
     }
   },
   computed: {
     ...mapGetters({
       showModal: 'modals/getIsShow',
+      arrayValues: 'modals/getValues',
     }),
   },
   watch: {
@@ -118,10 +128,7 @@ export default {
       if (this.showModal) {
         window.addEventListener('click', e => {
           const target = e.target;
-          if (target.className === 'primary__modal modal' || target.className === 'content__close' || target.className === 'buttons__back' || target.className === 'base-btn ctm-modal__btn') {
-            this.$store.dispatch('modals/hide');
-            this.modalVersion = 0;
-          }
+          this.hide(target);
         })
       }
       this.modalStatus = this.showModal;
@@ -130,8 +137,43 @@ export default {
   methods: {
     switchModal() {
       if (this.modalVersion === 0) {
-        this.modalVersion = 1;
+        if (this.userName !== '' && this.userPhone !== '') {
+          this.modalVersion = 1;
+          this.sendData();
+        } else {
+          if (this.userName === '') {
+            this.userName_error = 'Обязательное поле';
+          } else {
+            this.userName_error = '';
+          }
+          if (this.userPhone === '') {
+            this.userPhone_error = 'Обязательное поле';
+          } else {
+            this.userPhone_error = '';
+          }
+        }
       }
+    },
+    hide(target) {
+      if (target.className === 'primary__modal modal' || target.className === 'content__close' || target.className === 'buttons__back' || target.className === 'base-btn ctm-modal__btn') {
+        this.$store.dispatch('modals/hide');
+        this.modalVersion = 0;
+      } else if (target === 'all') {
+        this.$store.dispatch('modals/hide');
+        this.modalVersion = 0;
+      }
+    },
+    async sendData() {
+      let sendArray = {
+        Name: this.userName,
+        Number: this.userPhone,
+        Reason: this.arrayValues[0],
+        Dates: this.arrayValues[1],
+        apartmentArea: this.arrayValues[2],
+        Rooms_quantity: this.arrayValues[3],
+        Pay_type: this.arrayValues[4]
+      }
+      await this.$store.dispatch('modals/sendData', sendArray);
     },
   }
 }

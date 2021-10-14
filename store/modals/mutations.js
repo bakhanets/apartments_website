@@ -2,6 +2,9 @@ export default {
   setIsShow(state, value) {
     state.isShow = value;
   },
+  setValueArray(state, value) {
+    state.ddValues = value;
+  },
   setCurrentModalKey(state, value) {
     state.currentModalKey = value;
   },

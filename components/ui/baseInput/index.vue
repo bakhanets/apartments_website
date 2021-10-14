@@ -31,6 +31,12 @@
 <!--        <slot name="right-absolute" />-->
 <!--      </div>-->
     </div>
+    <div
+        v-if="errorText !== ''"
+        class="error"
+    >
+      {{ errorText }}
+    </div>
   </div>
 </template>
 <script>
@@ -119,6 +125,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.error {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 20px;
+  color: #D52929;
+}
 .ctm-field {
   &__selector {
     position: absolute;

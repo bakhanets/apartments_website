@@ -57,30 +57,35 @@
                 :items="apartmentArea"
                 :label="'Площадь квартиры'"
                 :placeholder="'Выберите вариант'"
+                :error="errorText_Area"
             />
             <baseDD
                 v-model="roomsNumberIndex"
                 :items="roomsNumber"
                 :label="'Количество комнат'"
                 :placeholder="'Выберите вариант'"
+                :error="errorText_Rooms"
             />
             <baseDD
                 v-model="constructionPhaseIndex"
                 :items="constructionPhase"
                 :label="'Этап строительства'"
                 :placeholder="'Выберите вариант'"
+                :error="errorText_Phase"
             />
             <baseDD
               v-model="purchasePurposeIndex"
               :items="purchasePurpose"
               :label="'Цель покупки'"
               :placeholder="'Выберите вариант'"
+              :error="errorText_Purpose"
             />
             <baseDD
               v-model="paymentTypeIndex"
               :items="paymentType"
               :label="'Вид оплаты'"
               :placeholder="'Выберите вариант'"
+              :error="errorText_Type"
             />
           </div>
           <button
@@ -106,6 +111,11 @@ export default {
       apartmentAreaIndex: -1,
       roomsNumberIndex: -1,
       paymentTypeIndex: -1,
+      errorText_Type: '',
+      errorText_Purpose: '',
+      errorText_Phase: '',
+      errorText_Rooms: '',
+      errorText_Area: ''
     }
   },
   computed: {
@@ -127,7 +137,37 @@ export default {
   },
   methods: {
     showModal() {
-      this.$store.dispatch('modals/show');
+      const errorText = 'Обязательное поля';
+      if (this.purchasePurposeIndex === -1) {
+        this.errorText_Purpose = errorText;
+      }
+      if (this.constructionPhaseIndex === -1) {
+        this.errorText_Phase = errorText;
+      }
+      if (this.apartmentAreaIndex === -1) {
+        this.errorText_Area = errorText;
+      }
+      if (this.roomsNumberIndex === -1) {
+        this.errorText_Rooms = errorText;
+      }
+      if (this.paymentTypeIndex === -1) {
+        this.errorText_Type = errorText;
+      }
+      const ddValueArray = [
+        this.purchasePurpose[this.purchasePurposeIndex],
+        this.constructionPhase[this.constructionPhaseIndex],
+        this.apartmentArea[this.apartmentAreaIndex],
+        this.roomsNumber[this.roomsNumberIndex],
+        this.paymentType[this.paymentTypeIndex]
+      ];
+      if (!ddValueArray.includes(-1)) {
+        this.$store.dispatch('modals/show', ddValueArray);
+        this.errorText_Purpose = '';
+        this.errorText_Phase = '';
+        this.errorText_Area = '';
+        this.errorText_Rooms = '';
+        this.errorText_Type = '';
+      }
     }
   },
 }

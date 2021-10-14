@@ -81,6 +81,12 @@
         </div>
       </transition>
     </div>
+    <div
+        v-if="error !== ''"
+        class="error"
+    >
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -105,7 +111,7 @@ export default {
       type: [String, Number],
       default: '',
     },
-    tip: {
+    error: {
       type: String,
       default: '',
     },
@@ -172,6 +178,14 @@ export default {
   margin-bottom: 4px;
   line-height: 28px;
   color: #070D17;
+}
+.error {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 20px;
+  color: #D52929;
 }
 .dd {
   display: flex;
