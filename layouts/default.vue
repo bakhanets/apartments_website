@@ -56,12 +56,14 @@
                   :label="'Номер телефона'"
                   :placeholder="'Введите номер телефона'"
                   :errorText="userPhone_error"
+                  :type="'number'"
                   id="phone"
               ></baseInput>
             </div>
             <div class="content__buttons buttons">
               <baseButton
                   class="buttons__back"
+                  @click="hide('all')"
               >Отмена</baseButton>
               <baseButton
                   class="buttons__send"

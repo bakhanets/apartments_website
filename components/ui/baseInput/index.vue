@@ -11,6 +11,7 @@
         class="ctm-field__input"
         :placeholder="placeholder"
         :autocomplete="autocomplete"
+        :type="type"
         required
         @input="input"
       >
