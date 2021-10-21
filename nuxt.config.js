@@ -1,4 +1,5 @@
 module.exports = {
+    target: 'static',
     head: {
         title: 'MSK APART',
         meta: [
@@ -7,7 +8,7 @@ module.exports = {
             { hid: 'description', name: 'description', content: 'Аппартаменты в Москве' },
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/img/app/favicon.svg' },
+            { rel: 'icon', type: 'image/x-icon', href: '/img/app/title_logo.jpg' },
         ],
     },
     css: [
