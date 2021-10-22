@@ -82,7 +82,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"title":"MSK APART","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Аппартаменты в Москве"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Fimg\u002Fapp\u002Ftitle_logo.jpg"}],"style":[],"script":[]},
+    head: {"title":"MSK APART","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Аппартаменты в Москве"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Fimg\u002Fapp\u002Ffavicon1.ico"}],"style":[],"script":[]},
 
     store,
     router,

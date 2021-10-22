@@ -8,7 +8,7 @@ module.exports = {
             { hid: 'description', name: 'description', content: 'Аппартаменты в Москве' },
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/img/app/title_logo.jpg' },
+            { rel: 'icon', type: 'image/x-icon', href: '/img/app/favicon1.ico' },
         ],
     },
     css: [
