@@ -10,10 +10,15 @@
           <p class="header__text header__text_number">+7 (991) 985-31-34</p>
         </div>
       </div>
-      <div class="template__main main">
+      <div
+        v-if="!ddBlockStatus"
+        class="template__main main">
         <nuxt />
       </div>
-      <div class="template__footer footer">
+      <div
+        v-if="!ddBlockStatus"
+        class="template__footer footer"
+      >
         <div class="footer__content">
           <div class="footer__logo">
             <p class="footer__text footer__text_light">MSK</p>
@@ -21,6 +26,40 @@
           </div>
           <p class="footer__text footer__text_number">+7 (991) 985-31-34</p>
         </div>
+      </div>
+      <div
+        v-if="ddBlockStatus"
+        class="template__DD DD"
+      >
+        <a
+          class="DD__back back"
+        >
+          <img
+            class="back__img"
+            :src="require('~/src/img/Arrow-small.svg')"
+            @click="returnAction()"
+          />
+          <p
+            class="back__text"
+            @click="returnAction()"
+          >Назад</p>
+        </a>
+        <div class="DD__content">
+          <div class="DD__step">{{ `Шаг ${choiceNumber} из 6` }}</div>
+          <div class="DD__title">{{stepsArray[choiceNumber].title}}</div>
+          <template v-for="(item, i) in stepsArray[choiceNumber].values">
+            <base-checkbox
+                v-model="choice"
+                :label="item"
+                :name="item"
+                class="DD__choice"
+            />
+          </template>
+        </div>
+        <baseButton
+            class="DD__btn"
+            @click="switchChoices()"
+        >Продолжить</baseButton>
       </div>
     </div>
     <div
@@ -102,27 +141,58 @@
 import { mapGetters } from 'vuex';
 import baseInput from '~/components/ui/baseInput';
 import baseButton from '~/components/ui/baseButton';
+import baseCheckbox from '~/components/ui/baseCheckbox';
 
 export default {
   name: "default",
   components: {
     baseInput,
     baseButton,
+    baseCheckbox,
   },
   data() {
     return {
+      choiceNumber: 1,
       modalStatus: null,
+      ddBlockStatus: false,
       modalVersion: 0,
       userName: '',
       userPhone: '',
       userName_error: '',
       userPhone_error: '',
+      choice: null,
+      stepsArray: {
+        1: {
+          title: "Укажите цель покупки",
+          values: ["Для проживания", "В целях инвестиций", "В подарок"],
+        },
+        2: {
+          title: "Укажите количество комнат",
+          values: ["Студия", "1-комнатная", "2-комнатная", "3-комнатная", "4 и более комнат", "Свободная планировка"],
+        },
+        3: {
+          title: "Укажите, какой этап строительства вас интересует",
+          values: ["Сдан", "Сдача в 2021", "Сдача в 2022", "Сдача в 2023", "Старт продаж"],
+        },
+        4: {
+          title: "Укажите желаемую площадь квартиры",
+          values: ["До 20 м2", "от 20 до 29 м2", "от 30 до 39 м2", "от 40 до 59 м2", "от 60 до 79 м2", "Более 80 м2"],
+        },
+        5: {
+          title: "Укажите способ оплаты",
+          values: ["Свободные средства", "Ипотека"],
+        },
+        6: {
+          title: "Укажите Ваше имя и номер телефона",
+        },
+      },
     }
   },
   computed: {
     ...mapGetters({
       showModal: 'modals/getIsShow',
       arrayValues: 'modals/getValues',
+      showBlockDD: 'modals/getIsShowDD',
     }),
   },
   watch: {
@@ -134,7 +204,13 @@ export default {
         })
       }
       this.modalStatus = this.showModal;
-    }
+    },
+    showBlockDD() {
+      this.ddBlockStatus = this.showBlockDD;
+    },
+    choice() {
+      console.log('test:', this.choice);
+    },
   },
   methods: {
     switchModal() {
@@ -156,6 +232,9 @@ export default {
         }
       }
     },
+    switchChoices() {
+      this.choiceNumber += 1;
+    },
     hide(target) {
       if (target.className === 'primary__modal modal' || target.className === 'content__close' || target.className === 'buttons__back' || target.className === 'base-btn ctm-modal__btn') {
         this.$store.dispatch('modals/hide');
@@ -163,6 +242,13 @@ export default {
       } else if (target === 'all') {
         this.$store.dispatch('modals/hide');
         this.modalVersion = 0;
+      }
+    },
+    returnAction() {
+      if (this.choiceNumber === 1) {
+        this.$store.dispatch('modals/hideDD');
+      } else {
+        this.choiceNumber -= 1;
       }
     },
     async sendData() {

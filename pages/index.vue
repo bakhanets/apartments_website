@@ -9,10 +9,17 @@
           <img class="present__img" :src="require('~/src/img/image_1.png')"/>
           <div class="present__desc desc">
             <p class="desc__text">Подберем квартиру по Вашему запросу в новых жилых комплексах Москвы</p>
-            <a class="desc__block" href="#ddBlock">
+            <a
+              class="desc__block"
+              href="#ddBlock"
+            >
               <p class="desc__link">Подоборать</p>
               <img class="desc__img" :src="require('~/src/img/arrow.svg')"/>
             </a>
+            <button
+              class="desc__btn"
+              @click="openDD()"
+            >Подоборать</button>
           </div>
         </div>
       </div>
@@ -168,6 +175,9 @@ export default {
         this.errorText_Rooms = '';
         this.errorText_Type = '';
       }
+    },
+    openDD() {
+      this.$store.dispatch('modals/showDD');
     }
   },
 }

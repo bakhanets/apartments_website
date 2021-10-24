@@ -2,6 +2,9 @@ export default {
   setIsShow(state, value) {
     state.isShow = value;
   },
+  setIsShowDD(state, value) {
+    state.isShowDD = value;
+  },
   setValueArray(state, value) {
     state.ddValues = value;
   },

@@ -11,12 +11,12 @@
         v-model="model"
         type="checkbox"
         class="checkbox-input"
+        @click="someFunction(label)"
       >
       <span class="checkmark" />
     </label>
     <div
       class="checkbox__label"
-      @click="model = !model"
     >
       {{ label }}
       <slot
@@ -67,6 +67,11 @@ export default {
       },
     },
   },
+  methods: {
+    someFunction(label) {
+      console.log(label)
+    },
+  }
 };
 </script>
 
@@ -74,13 +79,13 @@ export default {
 .checkbox {
   flex-shrink: 0;
   &__label {
-    font-family: 'Inter', sans-serif;
+    font-family: Montserrat, sans-serif;
     font-style: normal;
-    font-weight: normal;
+    font-weight: 300;
     font-size: 16px;
-    line-height: 130%;
-    color: $black600;
-    cursor: pointer;
+    line-height: 24px;
+
+    color: #070D17;
   }
 }
 .checkbox-field {
@@ -112,7 +117,7 @@ export default {
     cursor: pointer;
     border: 1px solid transparent;
     &:hover {
-      border: 1px solid $black100;
+      border: 1px solid black;
     }
   }
   .checkmark::after {
@@ -124,7 +129,7 @@ export default {
     width: 100%;
     height: 100%;
     border-radius: 3px;
-    background: $blue url('~assets/img/ui/checked.svg') no-repeat 50% 50%;
+    // background: $blue url('~assets/img/ui/checked.svg') no-repeat 50% 50%;
     opacity: 0;
   }
   input:checked ~ .checkmark::after {
@@ -150,13 +155,13 @@ export default {
       width: 0;
       height: 0;
       &:checked + span {
-        background-color: $blue;
+        // background-color: $blue;
         &::before {
           background-color: white;
         }
       }
       &:focus + span {
-        box-shadow: 0 0 1px $blue;
+        // box-shadow: 0 0 1px $blue;
       }
       &:checked + span:before {
         -webkit-transform: translateX(20px);
@@ -182,7 +187,7 @@ export default {
         left: -4px;
         bottom: -4px;
         border-radius: 10px;
-        background-color: $blue;
+        // background-color: $blue;
         box-shadow: 0 0 8px 4px rgba(20, 16, 41, 0.12);
         -webkit-transition: .4s;
         transition: .4s;

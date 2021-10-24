@@ -6,6 +6,12 @@ export default {
     hide({commit}) {
         commit('setIsShow', false);
     },
+    showDD({commit}, payload) {
+        commit('setIsShowDD', true);
+    },
+    hideDD({commit}) {
+        commit('setIsShowDD', false);
+    },
     setUnclicable({commit}) {
         commit('setUnclicable');
     },
