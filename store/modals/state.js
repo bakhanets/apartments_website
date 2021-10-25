@@ -5,4 +5,11 @@ export default () => ({
   currentModalKey: '',
   options: {},
   showWelcomeModal: true,
+  choicenDD: {
+    0: '',
+    1: '',
+    2: '',
+    3: '',
+    4: '',
+  },
 });

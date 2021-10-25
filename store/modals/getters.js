@@ -5,4 +5,5 @@ export default {
   getCurrentModalKey: (state) => state.currentModalKey,
   getOptions: (state) => state.options,
   getIsShowWelcome: (state) => state.showWelcomeModal,
+  getChoicenDD: (state) => state.choicenDD,
 };

@@ -121,6 +121,10 @@
 }
 .messageSend {
   max-width: 337px !important;
+  &_mobile {
+    margin-top: 50px;
+    max-width: 100% !important;
+  }
   &__content {
     display: grid;
     grid-template-columns: 1fr;

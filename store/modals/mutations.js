@@ -20,6 +20,11 @@ export default {
       isUnclosable: true,
     };
   },
+  setChoiceArray(state, value) {
+    const obj = state.choicenDD;
+    obj[(value.id - 1)] = value.name;
+    state.choicenDD = obj;
+  },
   setIsShowWelcome(state, value) {
     state.showWelcomeModal = value;
   },

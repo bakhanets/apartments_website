@@ -12,6 +12,9 @@ export default {
     hideDD({commit}) {
         commit('setIsShowDD', false);
     },
+    selectDD({commit}, payload) {
+        commit('setChoiceArray', payload);
+    },
     setUnclicable({commit}) {
         commit('setUnclicable');
     },
@@ -27,8 +30,10 @@ export default {
             });
             const json = await response.json();
             console.log('Успех:', JSON.stringify(json));
+            return true;
         } catch (error) {
             console.error('Ошибка:', error);
+            return false;
         }
     },
     checkWelcomeModal({commit}, value) {

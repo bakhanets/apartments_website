@@ -19,6 +19,7 @@
   <button
     v-else
     class="base-btn"
+    :disabled="disabled"
     :class="btnClass"
     @click="$emit('click')"
   >

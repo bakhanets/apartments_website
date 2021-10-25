@@ -31,35 +31,80 @@
         v-if="ddBlockStatus"
         class="template__DD DD"
       >
-        <a
-          class="DD__back back"
-        >
-          <img
-            class="back__img"
-            :src="require('~/src/img/Arrow-small.svg')"
-            @click="returnAction()"
-          />
-          <p
-            class="back__text"
-            @click="returnAction()"
-          >Назад</p>
-        </a>
-        <div class="DD__content">
-          <div class="DD__step">{{ `Шаг ${choiceNumber} из 6` }}</div>
-          <div class="DD__title">{{stepsArray[choiceNumber].title}}</div>
-          <template v-for="(item, i) in stepsArray[choiceNumber].values">
-            <base-checkbox
-                v-model="choice"
-                :label="item"
-                :name="item"
-                class="DD__choice"
+        <template v-if="!showMobileSuccess">
+          <a
+            class="DD__back back"
+          >
+            <img
+              class="back__img"
+              :src="require('~/src/img/Arrow-small.svg')"
+              @click="returnAction()"
             />
-          </template>
-        </div>
-        <baseButton
-            class="DD__btn"
-            @click="switchChoices()"
-        >Продолжить</baseButton>
+            <p
+              class="back__text"
+              @click="returnAction()"
+            >Назад</p>
+          </a>
+          <div class="DD__content">
+            <div class="DD__step">{{ `Шаг ${choiceNumber} из 6` }}</div>
+            <div class="DD__title">{{stepsArray[choiceNumber].title}}</div>
+            <template v-if="choiceNumber !== 6">
+              <template v-for="(item, i) in stepsArray[choiceNumber].values">
+                <base-checkbox
+                    v-model="choice"
+                    :array-number="choiceNumber"
+                    :array="specialArray"
+                    :label="item"
+                    :name="item"
+                    class="DD__choice"
+                />
+              </template>
+            </template>
+            <template v-else>
+              <baseInput
+                  v-model="userName"
+                  :label="'Ваше имя'"
+                  :placeholder="'Введите ваше имя'"
+                  :errorText="userName_error"
+              ></baseInput>
+              <baseInput
+                  v-model="userPhone"
+                  :label="'Номер телефона'"
+                  :placeholder="'Введите номер телефона'"
+                  :errorText="userPhone_error"
+                  :type="'number'"
+                  id="phone"
+              ></baseInput>
+            </template>
+          </div>
+          <baseButton
+              class="DD__btn"
+              :disabled="this.specialArray[choiceNumber - 1] === ''"
+              @click="choiceNumber !== 6 ? switchChoices() : switchModal()"
+          >{{ choiceNumber !== 6 ? 'Продолжить' : 'Отправить' }}</baseButton>
+        </template>
+        <template v-else>
+          <div class="messageSend messageSend_mobile">
+            <div class="messageSend__content">
+              <img
+                  :src="require('~/src/img/apply.svg')"
+                  alt="Thanks"
+              >
+              <div class="ctm-modal__title">
+                {{ 'Успешно' }}
+              </div>
+              <div class="ctm-modal__desc">
+                {{ 'Ваша заявка принята, и скоро мы свяжемся с Вами и вышлем список квартир' }}
+              </div>
+              <baseButton
+                  class="ctm-modal__btn"
+                  @click="mobileClose()"
+              >
+                {{ 'Закрыть' }}
+              </baseButton>
+            </div>
+          </div>
+        </template>
       </div>
     </div>
     <div
@@ -185,7 +230,10 @@ export default {
         6: {
           title: "Укажите Ваше имя и номер телефона",
         },
+        7: {}
       },
+      specialArray: [],
+      showMobileSuccess: false,
     }
   },
   computed: {
@@ -193,6 +241,7 @@ export default {
       showModal: 'modals/getIsShow',
       arrayValues: 'modals/getValues',
       showBlockDD: 'modals/getIsShowDD',
+      choicenDD: 'modals/getChoicenDD',
     }),
   },
   watch: {
@@ -208,16 +257,44 @@ export default {
     showBlockDD() {
       this.ddBlockStatus = this.showBlockDD;
     },
-    choice() {
-      console.log('test:', this.choice);
+    choicenDD: {
+      deep: true,
+      handler() {
+        this.specialArray = this.choicenDD;
+      },
     },
   },
+  mounted() {
+    this.specialArray = this.choicenDD;
+  },
   methods: {
+    async mobileClose() {
+      await this.$store.dispatch('modals/hideDD');
+      this.choiceNumber = 1;
+      this.showMobileSuccess = false;
+    },
     switchModal() {
-      if (this.modalVersion === 0) {
+      if (!this.showBlockDD) {
+        if (this.modalVersion === 0) {
+          if (this.userName !== '' && this.userPhone !== '') {
+            this.modalVersion = 1;
+            this.sendData('pc');
+          } else {
+            if (this.userName === '') {
+              this.userName_error = 'Обязательное поле';
+            } else {
+              this.userName_error = '';
+            }
+            if (this.userPhone === '') {
+              this.userPhone_error = 'Обязательное поле';
+            } else {
+              this.userPhone_error = '';
+            }
+          }
+        }
+      } else {
         if (this.userName !== '' && this.userPhone !== '') {
-          this.modalVersion = 1;
-          this.sendData();
+          this.sendData('mob');
         } else {
           if (this.userName === '') {
             this.userName_error = 'Обязательное поле';
@@ -251,17 +328,36 @@ export default {
         this.choiceNumber -= 1;
       }
     },
-    async sendData() {
-      let sendArray = {
-        Name: this.userName,
-        Number: this.userPhone,
-        Reason: this.arrayValues[0],
-        Dates: this.arrayValues[1],
-        apartmentArea: this.arrayValues[2],
-        Rooms_quantity: this.arrayValues[3],
-        Pay_type: this.arrayValues[4]
+    async sendData(item) {
+      let sendArray;
+      if (item === 'pc') {
+        sendArray = {
+          Name: this.userName,
+          Number: this.userPhone,
+          Reason: this.arrayValues[0],
+          Dates: this.arrayValues[1],
+          apartmentArea: this.arrayValues[2],
+          Rooms_quantity: this.arrayValues[3],
+          Pay_type: this.arrayValues[4]
+        }
+      } else {
+        sendArray = {
+          Name: this.userName,
+          Number: this.userPhone,
+          Reason: this.specialArray[0],
+          Dates: this.specialArray[2],
+          apartmentArea: this.specialArray[3],
+          Rooms_quantity: this.specialArray[1],
+          Pay_type: this.specialArray[4]
+        }
       }
-      await this.$store.dispatch('modals/sendData', sendArray);
+      try {
+        if (await this.$store.dispatch('modals/sendData', sendArray)) {
+          this.showMobileSuccess = true;
+        }
+      } catch (e) {
+        console.log(e);
+      }
     },
   }
 }

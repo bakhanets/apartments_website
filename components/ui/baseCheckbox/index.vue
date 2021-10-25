@@ -46,6 +46,10 @@ export default {
       type: String,
       default: 'checkbox',
     },
+    arrayNumber: {
+      type: Number,
+      default: 0,
+    },
   },
   computed: {
     checkboxClass() {
@@ -69,7 +73,7 @@ export default {
   },
   methods: {
     someFunction(label) {
-      console.log(label)
+      this.$store.dispatch('modals/selectDD', { id: this.arrayNumber, name: label });
     },
   }
 };
