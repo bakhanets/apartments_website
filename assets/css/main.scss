@@ -577,6 +577,11 @@
     padding: 20px 0 0 0;
     margin-bottom: 0;
   }
+  .DD {
+    &__btn {
+      margin-top: 60%;
+    }
+  }
 }
 @media only screen and (max-width: 425px) {
   .primary__template {
@@ -639,6 +644,23 @@
     &__title {
       font-size: 20px;
       line-height: 30px;
+    }
+    &__btn {
+      margin-top: 30%;
+    }
+  }
+}
+@media only screen and (max-width: 320px) {
+  .DD {
+    &__btn {
+      margin-top: 0;
+    }
+  }
+}
+@media only screen and (min-height: 800px) {
+  .DD {
+    &__btn {
+      margin-top: 70%;
     }
   }
 }

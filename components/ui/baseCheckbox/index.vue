@@ -13,7 +13,10 @@
         class="checkbox-input"
         @click="someFunction(label)"
       >
-      <span class="checkmark" />
+      <span
+        class="checkmark"
+        :class="newValue ? 'checkmark_selected' : ''"
+      />
     </label>
     <div
       class="checkbox__label"
@@ -50,6 +53,10 @@ export default {
       type: Number,
       default: 0,
     },
+    newValue: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     checkboxClass() {
@@ -69,6 +76,11 @@ export default {
       set(value) {
         this.$emit('input', value);
       },
+    },
+  },
+  watch: {
+    value() {
+      this.model = this.value;
     },
   },
   methods: {
@@ -103,6 +115,9 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 0;
+    &-input_selected {
+      background: black;
+    }
   }
   input[type="checkbox"] {
     position: absolute;
@@ -120,8 +135,9 @@ export default {
     border-radius: 3px;
     cursor: pointer;
     border: 1px solid transparent;
-    &:hover {
-      border: 1px solid black;
+    background: url('~static/img/app/off.svg') no-repeat 50% 50%;
+    &_selected {
+      background: url('~static/img/app/on.svg') no-repeat 50% 50%;
     }
   }
   .checkmark::after {
@@ -133,7 +149,7 @@ export default {
     width: 100%;
     height: 100%;
     border-radius: 3px;
-    // background: $blue url('~assets/img/ui/checked.svg') no-repeat 50% 50%;
+    // background: url('~static/img/app/on.svg') no-repeat 50% 50%;
     opacity: 0;
   }
   input:checked ~ .checkmark::after {

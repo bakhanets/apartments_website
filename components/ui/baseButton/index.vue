@@ -224,10 +224,12 @@ export default {
   //    background-color: $red !important;
   //  }
   //}
-  //&_disabled {
-  //  pointer-events: none !important;
-  //  background: #D1D1CF !important;
-  //}
+  &_disabled {
+    pointer-events: none !important;
+    background: #F7F8FA !important;
+    color: #000000 !important;
+    border: 1px solid;
+  }
   //&_outline {
   //  width: 100%;
   //  border: 1px solid rgba(0, 131, 199, 0.1) !important;

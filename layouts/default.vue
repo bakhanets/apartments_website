@@ -54,6 +54,7 @@
                     v-model="choice"
                     :array-number="choiceNumber"
                     :array="specialArray"
+                    :new-value="specialArray[choiceNumber - 1] === item"
                     :label="item"
                     :name="item"
                     class="DD__choice"
